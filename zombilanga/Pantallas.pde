@@ -1,109 +1,50 @@
 class Principal {
 
-  
-  
-  Juego juego; 
+  Mira mira;
   String estado;
-  PImage logo, botonVolver, botonJugar, botonInstrucciones, imgCargando, imgGanaste, imgPerdiste, imgInstrucciones, imgCreditos;
+  PImage inicio, logo, nivelUno, nivelDos, nivelTres, botonComenzar;
+  int millis, tiempo;
 
   Principal() {
-    //variables
+    
+    mira = new Mira();
     estado = "inicio";
-    
-    //imagenes
+    millis = millis();
+    tiempo = 5*5000;
+
+
+
+
+    //CARGA DE IMAGENES
+    inicio = loadImage("inicioDos.jpeg");
+    nivelUno = loadImage("nivel1.jpg");
+    botonComenzar = loadImage("botonComenzar.png");
     logo = loadImage("logo.png");
-    imgCargando = loadImage("cargando.png");
-    imgGanaste = loadImage("ganaste.png");
-    imgPerdiste = loadImage("perdiste.png");
-    imgInstrucciones = loadImage("instrucciones.png");
-    imgCreditos = loadImage("creditos.png");
-    botonVolver = loadImage("volver.png");
-    botonJugar = loadImage("jugar.png");
-    botonInstrucciones = loadImage("botonInstrucciones.png");
-
-    
   }
-
 
   void pantallas() {
-    /*if(fondo.isPlaying()== false){ 
-     fondo.play(); 
-     }*/
-
-
-    //estado de inicio 
+    //INICIO
     if (estado.equals("inicio")) {
       imageMode(CENTER);
-      image(logo, width/2, height/4, logo.width/3, logo.height/3);
-      //BOTON JUGAR
-      imageMode(CORNER);
-      image(botonJugar, 200, 325, botonJugar.width/12, botonJugar.height/12);
-      // BOTON INSTRUCCIONES
-      image(botonInstrucciones, 200, 410, botonInstrucciones.width/40, botonInstrucciones.height/40 );
-    }
-    
-    // estado instrucciones
-    if (estado.equals("instrucciones")) {
-      //  background(0);
-      imageMode(CORNER);
-      image(imgInstrucciones, 0, 0, width, height);
-    }
-    //estado juego
-    if (estado.equals("juego")) {
-      //  background(0);
-      juego.dibujar();
-      juego.colisiones();
-      juego.actualizar();
+      image(inicio, width/2, height/2);
+      image(logo, width/2, height/4);
+      image (botonComenzar, width/2, height/1.2, botonComenzar.width/5, botonComenzar.height/5);
+      mira.puntero();
+      fill(255);
+      textSize(50);
+      text("X:" + mouseX + "Y:" + mouseY, mouseX, mouseY);
     }
 
-    // estado ganaste
-    if (estado.equals("ganaste")) {
-      imageMode(CORNER);
-      image(imgGanaste, 0, 0, width, height);
-    }
-
-
-    // estado perdiste
-    if (estado.equals("perdiste")) {
-      //  background(0);
-      imageMode(CORNER);
-      image(imgPerdiste, 0, 0, width, height);
-    }
-    //estado creditos
-    if (estado.equals("creditos")) {
-      imageMode(CORNER);
-      image(imgCreditos, 0, 0, width, height);
-      image(botonVolver, 200,480, botonVolver.width/12, botonVolver.height/12);
-      
+    if (estado.equals("nivelUno")) {
+      imageMode(CENTER);
+      image(nivelUno, width/2, height/2);
+      mira.puntero();
     }
   }
 
-
-  void interaccion() { // para acceder a los estados
-    if (estado.equals("inicio") && mouseX > 200 && mouseX < 200 + 150 && mouseY > 325 && mouseY < 325 + 50 ) {
-      clic.jump(0.2);
-      estado = "juego";
-      juego = new Juego();
-    }
-    if (estado.equals("inicio") && mouseX > 200 && mouseX < 200 + 150 && mouseY > 410 && mouseY < 410 + 50 ) {
-      clic.jump(0.2);
-      estado = "instrucciones";
-    }
-      if (estado.equals("creditos") && mouseX > 200 && mouseX < 200 + 150 && mouseY > 480 && mouseY < 480 + 50 ) {
-        clic.jump(0.2);
-      estado = "inicio";
+  void interaccion() {
+    if (estado.equals("inicio") && mouseX > 550 && mouseX < 550 + 300 && mouseY > 600 && mouseY < 600 + 75 ) {
+      estado = "nivelUno";
     }
   }
-
-  void condiciones() { //reinicios o acceder a otros estados
-    if (keyCode == ' ') {
-      if (estado.equals("perdiste")  || estado.equals("instrucciones")) {
-         estado = "inicio";
-      }
-      if (estado.equals("ganaste")) {
-        estado = "creditos"; 
-      }
-    }
-  }
-
-} 
+}
