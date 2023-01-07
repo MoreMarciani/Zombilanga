@@ -1,13 +1,20 @@
-void setup(){
+
+Principal principal;
+
+void setup() {
   fullScreen();
-  //size(1920,1080);
-  fill(100);
+  principal = new Principal();
+
+
+}
+void draw() {
+  
+principal.pantallas();
   
 }
 
+void mouseClicked() {
+  principal.interaccion();
+}
 
-void draw(){
-  
-  
-  
 }
